@@ -2,21 +2,25 @@ version: 0.2
 
 env:
 
-  parameter-store:
-    DOCKERHUB_USER: "/docker/username"
-  secrets-manager:
-    DOCKERHUB_TOKEN: "docler_creds:token"
+  # parameter-store:
+  #   DOCKERHUB_USER: "/docker/username"
+  # secrets-manager:
+  #   DOCKERHUB_TOKEN: "docler_creds:token"
 
 phases:
 
   pre_build:
     commands:
-      - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
+      # - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 331034400690.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
-      - docker build -t angular-ecs-build:latest .
+      # - docker build -t angular-ecs-build:latest .
+      - docker build -t angular-ecs-build .
 
   post_build:
     commands:
-      - docker tag angular-ecs-build:latest ${DOCKERHUB_USER}/angular-ecs-build:latest
-      - docker push ${DOCKERHUB_USER}/angular-ecs-build:latest
+      # - docker tag angular-ecs-build:latest ${DOCKERHUB_USER}/angular-ecs-build:latest
+      # - docker push ${DOCKERHUB_USER}/angular-ecs-build:latest
+      - docker tag angular-ecs-build:latest 331034400690.dkr.ecr.us-east-1.amazonaws.com/angular-ecs-build:latest
+      - docker push 331034400690.dkr.ecr.us-east-1.amazonaws.com/angular-ecs-build:latest
