@@ -1,31 +1,20 @@
 version: 0.2
 
-env:
-  variables:
-    key: "value"    
-  parameter-store:
-    DOCKERHUB_USER: "/docker/username"
-  secrets-manager:
-    DOCKERHUB_TOKEN: "docker_credentials:token"
+run-as: Linux-user-name
 
+# env:
+#   shell: 
+        
 phases:
+
   pre_build:
     commands:
-      # - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin 
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 556074018555.dkr.ecr.ap-south-1.amazonaws.com
+      - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
   build:
     commands:
-      # - docker build -t my-angular-app:latest .
-      - docker build -t angular-repo .
+      - docker build -t angular-ecs-build:latest .
+
   post_build:
     commands:
-      # - docker tag my-angular-app:latest ${DOCKERHUB_USER}/my-angular-app:latest
-      - docker tag angular-repo:latest 556074018555.dkr.ecr.ap-south-1.amazonaws.com/angular-repo:latest      
-      # - docker push ${DOCKERHUB_USER}/my-angular-app:latest
-      - docker push 556074018555.dkr.ecr.ap-south-1.amazonaws.com/angular-repo:latest
-
-      - printf '[{"name":"angularapp","imageUri":"556074018555.dkr.ecr.ap-south-1.amazonaws.com/angular-repo:latest"}]' > imagedefinitions.json
-
-artifacts:
-  files:
-    - imagedefinitions.json
+      - docker tag angular-ecs-build:latest ${DOCKERHUB_USER}/angular-ecs-build:latest
+      - docker push ${DOCKERHUB_USER}/angular-ecs-build:latest
