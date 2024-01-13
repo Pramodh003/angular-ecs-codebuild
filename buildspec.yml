@@ -1,11 +1,11 @@
 version: 0.2
 
-env:
+# env:
 
-  # parameter-store:
-  #   DOCKERHUB_USER: "/docker/username"
-  # secrets-manager:
-  #   DOCKERHUB_TOKEN: "docler_creds:token"
+#   # parameter-store:
+#   #   DOCKERHUB_USER: "/docker/username"
+#   # secrets-manager:
+#   #   DOCKERHUB_TOKEN: "docler_creds:token"
 
 phases:
 
