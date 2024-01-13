@@ -24,3 +24,8 @@ phases:
       # - docker push ${DOCKERHUB_USER}/angular-ecs-build:latest
       - docker tag angular-ecs-build:latest 331034400690.dkr.ecr.us-east-1.amazonaws.com/angular-ecs-build:latest
       - docker push 331034400690.dkr.ecr.us-east-1.amazonaws.com/angular-ecs-build:latest
+      - printf '[{"name":"angularec2build","imageUri":"arn:aws:ecs:us-east-1:331034400690:service/angularcluster/angularec2build"}]' > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
