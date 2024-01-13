@@ -1,10 +1,4 @@
 version: 0.2
-
-run-as: Linux-user-name
-
-# env:
-#   shell: 
-        
 phases:
 
   pre_build:
